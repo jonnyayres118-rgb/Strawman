@@ -1,0 +1,1 @@
+import "./globals.css"; export const metadata={title:"Elastic Labs Opportunity Engine",description:"Evidence-led opportunity intelligence and capability architecture."}; export default function RootLayout({children}){return <html lang="en"><body>{children}</body></html>}
