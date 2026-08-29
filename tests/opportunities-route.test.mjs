@@ -4,7 +4,10 @@ import fs from 'node:fs';
 
 const route=fs.readFileSync(new URL('../app/api/opportunities/route.js', import.meta.url),'utf8');
 
-test('opportunities route includes a bundled fallback for the full Sheet representation',()=>{
-  assert.match(route,/pipeline-snapshot\.json/);
-  assert.match(route,/fallback/);
+test('opportunities route includes the complete Sheet universe as fallback',()=>{
+  assert.match(route,/const fallback=/);
+  assert.match(route,/Lawfront\|97/);
+  assert.match(route,/Zema Global Data Corporation\|94/);
+  assert.match(route,/Crown Agents Bank\|64/);
+  assert.match(route,/opportunities:fallback/);
 });
