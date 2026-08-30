@@ -14,3 +14,8 @@ test('client proposal refuses to publish a partial scenario price', () => {
   assert.equal(view.investment, null);
   assert.equal(view.commercialStatus, 'MISSING_INPUT');
 });
+
+test('client team keeps role shape and deployment but not individual commercial rates', () => {
+  const view = commercialProposalView({ isFullyCosted:true, revenue:16800, members:[{ roleId:'ai-product-lead', layer:'core', phase:'Discover', totalDays:16, weeks:8, daysPerWeek:2, buyRate:700, sellRate:1050 }] });
+  assert.deepEqual(view.team[0], { roleId:'ai-product-lead', layer:'core', phase:'Discover', totalDays:16, weeks:8, daysPerWeek:2 });
+});
