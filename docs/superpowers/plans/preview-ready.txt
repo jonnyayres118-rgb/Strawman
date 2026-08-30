@@ -1,4 +1,4 @@
 Modular Strawman preview candidate.
 Preview route: /strawman-preview
 Production branch unchanged.
-Advance branch pointer.
+Pointer candidate complete.
