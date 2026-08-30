@@ -1,0 +1,5 @@
+import test from "node:test";import assert from "node:assert/strict";import {createEngagement,addMember,removeMember,moveMember,duplicateScenario} from "../lib/engagement.mjs";
+const member={roleId:"ai-product-lead",layer:"Core",weeks:8,daysPerWeek:2,buyRate:600,sellRate:900};
+test("one-person engagement is valid and calculated",()=>{const e=createEngagement({members:[member]});assert.equal(e.scenarios[0].members.length,1);assert.equal(e.scenarios[0].economics.revenue,14400);});
+test("members can be added moved and removed",()=>{let e=createEngagement({members:[member]});const sid=e.activeScenarioId;e=addMember(e,sid,{...member,roleId:"ai-engineer"});const second=e.scenarios[0].members[1];e=moveMember(e,sid,second.id,"Flex");assert.equal(e.scenarios[0].members[1].layer,"Flex");e=removeMember(e,sid,second.id);assert.equal(e.scenarios[0].members.length,1);});
+test("duplicating a scenario isolates member ids",()=>{const e=createEngagement({members:[member]});const d=duplicateScenario(e,e.activeScenarioId,"Accelerated");assert.equal(d.scenarios.length,2);assert.notEqual(d.scenarios[0].members[0].id,d.scenarios[1].members[0].id);});

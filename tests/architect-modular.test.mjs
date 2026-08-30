@@ -1,0 +1,3 @@
+import test from "node:test";import assert from "node:assert/strict";import { architect } from "../lib/architect.mjs";
+test("uncertain AI discovery can recommend a one-person Core",()=>{const r=architect({trigger:"AI opportunity",unknown:"Unclear whether there is enough demand, discovery needed"});assert.equal(r.members.length,1);assert.equal(r.members[0].layer,"Core");assert.ok(r.deferredCapability.length>0);});
+test("integration complexity can recommend multiple Core capabilities",()=>{const r=architect({trigger:"Acquisition integration",hypothesis:"Data platform integration and migration across multiple systems"});assert.ok(r.members.length>1);});
