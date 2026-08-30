@@ -8,7 +8,7 @@
 - Client proposal output must expose SELL-side investment only.
 - Scenario modelling supports lean/land, recommended and accelerated shapes.
 
-Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automatically promoted to approved pricing defaults. The salary-to-loaded-day-cost calculator is restored, but it produces a role cost only when an exact annual salary input has been recovered or approved and billable-day assumptions are valid. Negative salary or on-cost inputs are rejected.
+Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automatically promoted to approved pricing defaults. The salary-to-loaded-day-cost calculator is restored, but it produces a role cost only when an exact annual salary input has been recovered or approved and billable-day assumptions are valid. Negative salary, on-cost, BUY or SELL values are rejected.
 
 ## Commercial engine rule
 Every BUY and SELL value carries provenance independently. Input precedence is explicit per side: a deal BUY override wins only for BUY; otherwise actual talent BUY can replace benchmark BUY; otherwise benchmark BUY is used. A deal SELL override wins only for SELL; otherwise benchmark SELL is used. This means changing client pricing never silently rewrites delivery cost.
