@@ -8,10 +8,13 @@
 - Client proposal output must expose SELL-side investment only.
 - Scenario modelling supports lean/land, recommended and accelerated shapes.
 
+## Commercial engine rule
+Every BUY and SELL value carries provenance independently. Inputs may come from a recovered benchmark, an actual verified talent cost, or an explicit deal override. If either side is absent, the model remains MISSING_INPUT and does not infer the missing value.
+
 ## Must not be guessed
 - Role-specific BUY rates.
 - Role-specific SELL rates.
 - Seniority multipliers/bands where exact values are not recovered.
 - Markup or target-margin defaults where exact values are not recovered.
 
-The runtime must return MISSING_INPUT for unrecovered commercial inputs. A user-approved override or verified talent rate may replace a missing benchmark, with provenance retained.
+The client proposal is downstream of internal economics and receives only SELL-side total investment plus client-safe team/deployment information. Individual day rates, talent costs, GP and GM stay internal.
