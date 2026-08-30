@@ -1,4 +1,4 @@
 Modular Strawman preview candidate.
 Preview route: /strawman-preview
 Production branch unchanged.
-Ready for final isolated branch ref update.
+Final isolated ref update candidate.
