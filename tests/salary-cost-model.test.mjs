@@ -14,3 +14,9 @@ test('missing salary stays missing', () => {
   assert.equal(result.status, 'MISSING_INPUT');
   assert.equal(result.loadedDayCost, null);
 });
+
+test('invalid billable days cannot create a cost', () => {
+  const result = salaryToLoadedDayCost({ annualSalary:100000, billableDaysPerYear:0, onCostRate:0.386 });
+  assert.equal(result.status, 'MISSING_INPUT');
+  assert.equal(result.loadedDayCost, null);
+});
