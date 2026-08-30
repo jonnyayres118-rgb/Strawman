@@ -18,3 +18,8 @@ test('fully costed summary exposes final internal economics', () => {
   assert.equal(summary.finalGp, 14000);
   assert.equal(summary.finalGm, 1/3);
 });
+
+test('summary reports unresolved role count for UI attention state', () => {
+  const summary = commercialSummary({ isFullyCosted:false, missingInputs:['ai-engineer','data-engineer'] });
+  assert.equal(summary.missingCount, 2);
+});
