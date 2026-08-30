@@ -13,7 +13,7 @@ Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automati
 ## Commercial engine rule
 Every BUY and SELL value carries provenance independently. Inputs may come from a recovered benchmark, an actual verified talent cost, or an explicit deal override. If either side is absent, the model remains MISSING_INPUT and does not infer the missing value.
 
-A scenario can contain unresolved roles while being designed. The internal workspace may show verified subtotal economics, but a final scenario investment is unavailable until every included role is fully costed. Client proposal generation therefore cannot accidentally present a partial team subtotal as the full fee.
+A scenario can contain unresolved roles while being designed. The internal workspace shows verified subtotal economics and the exact missing roles, but a final scenario investment is unavailable until every included role is fully costed. Client proposal generation therefore cannot accidentally present a partial team subtotal as the full fee.
 
 ## Must not be guessed
 - Role-specific BUY rates.
