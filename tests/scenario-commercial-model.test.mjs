@@ -37,3 +37,10 @@ test('empty scenario is not considered fully costed', () => {
   assert.equal(result.isFullyCosted, false);
   assert.equal(result.revenue, null);
 });
+
+test('invalid commercial input prevents final scenario pricing', () => {
+  const result = calculateCommercialScenario({ members:[{ id:'bad', roleId:'ai-engineer', weeks:4, daysPerWeek:2, commercial:{ buyRate:-1, sellRate:1000, source:'bad' } }] });
+  assert.equal(result.isFullyCosted, false);
+  assert.deepEqual(result.missingInputs, ['ai-engineer']);
+  assert.equal(result.revenue, null);
+});
