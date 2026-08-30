@@ -20,3 +20,8 @@ test('invalid billable days cannot create a cost', () => {
   assert.equal(result.status, 'MISSING_INPUT');
   assert.equal(result.loadedDayCost, null);
 });
+
+test('negative salary or on-cost is rejected', () => {
+  assert.equal(salaryToLoadedDayCost({ annualSalary:-1, billableDaysPerYear:167, onCostRate:0.386 }).status, 'INVALID_INPUT');
+  assert.equal(salaryToLoadedDayCost({ annualSalary:100000, billableDaysPerYear:167, onCostRate:-0.1 }).status, 'INVALID_INPUT');
+});
