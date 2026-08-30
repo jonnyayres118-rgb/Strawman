@@ -11,3 +11,10 @@ test('role benchmark registry starts empty until exact values are recovered or a
   assert.deepEqual(Object.keys(COMMERCIAL_BENCHMARKS.roles), []);
   assert.equal(benchmarkForRole('principal-ai').status, 'MISSING_INPUT');
 });
+
+test('benchmark lookup returns fresh objects so deal editing cannot mutate registry state', () => {
+  const a = benchmarkForRole('principal-ai');
+  a.buyRate = 999;
+  const b = benchmarkForRole('principal-ai');
+  assert.equal(b.buyRate, null);
+});
