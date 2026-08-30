@@ -9,3 +9,12 @@ test('workspace summary makes missing inputs explicit while retaining verified s
   assert.deepEqual(summary.missingInputs, ['ai-engineer']);
   assert.equal(summary.finalInvestment, null);
 });
+
+test('fully costed summary exposes final internal economics', () => {
+  const summary = commercialSummary({ isFullyCosted:true, verifiedRevenue:42000, verifiedCost:28000, verifiedGp:14000, revenue:42000, cost:28000, gp:14000, gm:1/3, missingInputs:[] });
+  assert.equal(summary.status, 'Fully costed');
+  assert.equal(summary.finalInvestment, 42000);
+  assert.equal(summary.finalCost, 28000);
+  assert.equal(summary.finalGp, 14000);
+  assert.equal(summary.finalGm, 1/3);
+});
