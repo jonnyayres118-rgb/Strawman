@@ -1,2 +1,3 @@
 Modular Strawman preview ready for Vercel build verification.
 Includes isolated scenario state, role-level economics and client-safe proposal preview.
+Production branch has not been changed.
