@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolveCommercialRate, priceMember } from '../lib/verified-rate-engine.mjs';
+import { benchmarkForRole, COMMERCIAL_BENCHMARKS } from '../data/commercial-benchmarks.mjs';
 
 test('missing role economics remain missing rather than inventing a fee', () => {
-  const rate = resolveCommercialRate({ roleId: 'ai-product-lead' });
+  const benchmark = benchmarkForRole('ai-product-lead');
+  const rate = resolveCommercialRate({ roleId:'ai-product-lead', benchmark });
   assert.equal(rate.status, 'MISSING_INPUT');
   assert.equal(rate.buyRate, null);
   assert.equal(rate.sellRate, null);
@@ -16,4 +18,10 @@ test('verified benchmark prices an engagement member using explicit source value
   assert.equal(member.cost, 11200);
   assert.equal(member.gp, 5600);
   assert.equal(member.rateSource, 'verified-source');
+});
+
+test('recovered operating assumptions are explicit and provenance-labelled', () => {
+  assert.equal(COMMERCIAL_BENCHMARKS.assumptions.billableDaysPerYear.value, 167);
+  assert.equal(COMMERCIAL_BENCHMARKS.assumptions.onCostRate.value, 0.386);
+  assert.match(COMMERCIAL_BENCHMARKS.assumptions.onCostRate.status, /RECOVERED/);
 });
