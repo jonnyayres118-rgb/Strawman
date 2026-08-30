@@ -17,3 +17,11 @@ test('a partial rate never fabricates its missing counterpart', () => {
   assert.equal(rate.buyRate, 650);
   assert.equal(rate.sellRate, null);
 });
+
+test('deal BUY override takes precedence over talent and benchmark BUY while SELL can remain benchmarked', () => {
+  const rate = resolveCommercialRate({ roleId:'data-engineer', benchmark:{ buyRate:600, sellRate:1000, source:'benchmark:v1' }, talent:{ buyRate:650, source:'talent:actual' }, override:{ buyRate:700, source:'deal:approved-buy' } });
+  assert.equal(rate.buyRate, 700);
+  assert.equal(rate.sellRate, 1000);
+  assert.equal(rate.buySource, 'deal:approved-buy');
+  assert.equal(rate.sellSource, 'benchmark:v1');
+});
