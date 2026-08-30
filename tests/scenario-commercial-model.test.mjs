@@ -31,3 +31,9 @@ test('duplicate unresolved roles are reported once for commercial attention', ()
   ]});
   assert.deepEqual(result.missingInputs, ['ai-engineer']);
 });
+
+test('empty scenario is not considered fully costed', () => {
+  const result = calculateCommercialScenario({ members:[] });
+  assert.equal(result.isFullyCosted, false);
+  assert.equal(result.revenue, null);
+});
