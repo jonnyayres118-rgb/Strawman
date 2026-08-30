@@ -1,4 +1,4 @@
 Modular Strawman preview candidate.
 Preview route: /strawman-preview
 Production branch unchanged.
-Ready for Vercel.
+Vercel preview candidate.
