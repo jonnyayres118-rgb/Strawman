@@ -41,3 +41,9 @@ test('negative commercial rates are invalid', () => {
 test('non numeric commercial rates are invalid', () => {
   assert.equal(resolveCommercialRate({ roleId:'bad', override:{ buyRate:'abc', sellRate:1000, source:'bad' } }).status, 'INVALID_INPUT');
 });
+
+test('invalid allocation cannot create member economics', () => {
+  const member = priceMember({ roleId:'ai-engineer', weeks:0, daysPerWeek:2 }, { buyRate:700, sellRate:1000, source:'approved' });
+  assert.equal(member.rateStatus, 'INVALID_INPUT');
+  assert.equal(member.revenue, null);
+});
