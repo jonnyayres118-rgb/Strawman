@@ -1,0 +1,2 @@
+import test from "node:test";import assert from "node:assert/strict";import fs from "node:fs";import path from "node:path";
+test("interactive preview exposes modular team and client proposal controls",()=>{const source=fs.readFileSync(path.join(process.cwd(),"components/strawman/StrawmanWorkspace.jsx"),"utf8");for(const text of ["+ Add team member","Duplicate","Remove","Core","Flex","Scale","Client Proposal","+ Scenario","BUY / day","SELL / day"])assert.ok(source.includes(text),text);});
