@@ -8,7 +8,7 @@
 - Client proposal output must expose SELL-side investment only.
 - Scenario modelling supports lean/land, recommended and accelerated shapes.
 
-Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automatically promoted to approved pricing defaults. The salary-to-loaded-day-cost calculator is restored, but it produces a role cost only when an exact annual salary input has been recovered or approved.
+Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automatically promoted to approved pricing defaults. The salary-to-loaded-day-cost calculator is restored, but it produces a role cost only when an exact annual salary input has been recovered or approved and billable-day assumptions are valid.
 
 ## Commercial engine rule
 Every BUY and SELL value carries provenance independently. Inputs may come from a recovered benchmark, an actual verified talent cost, or an explicit deal override. If either side is absent, the model remains MISSING_INPUT and does not infer the missing value. Explicit zero values are preserved where deliberately approved rather than treated as absent. Benchmark lookups are copied into deal state so editing a Strawman cannot mutate the underlying rate library.
