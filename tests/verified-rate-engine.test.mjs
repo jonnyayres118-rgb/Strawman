@@ -25,3 +25,10 @@ test('recovered operating assumptions are explicit and provenance-labelled', () 
   assert.equal(COMMERCIAL_BENCHMARKS.assumptions.onCostRate.value, 0.386);
   assert.match(COMMERCIAL_BENCHMARKS.assumptions.onCostRate.status, /RECOVERED/);
 });
+
+test('zero BUY remains a valid explicit value rather than being treated as missing', () => {
+  const rate = resolveCommercialRate({ roleId:'founder', override:{ buyRate:0, sellRate:1200, source:'approved' } });
+  assert.equal(rate.status, 'VERIFIED');
+  assert.equal(rate.buyRate, 0);
+  assert.equal(rate.sellRate, 1200);
+});
