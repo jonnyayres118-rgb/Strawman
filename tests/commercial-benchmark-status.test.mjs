@@ -18,3 +18,11 @@ test('benchmark lookup returns fresh objects so deal editing cannot mutate regis
   const b = benchmarkForRole('principal-ai');
   assert.equal(b.buyRate, null);
 });
+
+test('known operating assumptions can support future salary-to-cost calculations without inventing role salaries', () => {
+  const days = COMMERCIAL_BENCHMARKS.assumptions.billableDaysPerYear.value;
+  const onCost = COMMERCIAL_BENCHMARKS.assumptions.onCostRate.value;
+  assert.equal(days, 167);
+  assert.equal(onCost, 0.386);
+  assert.equal(COMMERCIAL_BENCHMARKS.roles['ai-engineer'], undefined);
+});
