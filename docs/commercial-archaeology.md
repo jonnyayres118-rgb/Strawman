@@ -8,6 +8,8 @@
 - Client proposal output must expose SELL-side investment only.
 - Scenario modelling supports lean/land, recommended and accelerated shapes.
 
+Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automatically promoted to approved pricing defaults.
+
 ## Commercial engine rule
 Every BUY and SELL value carries provenance independently. Inputs may come from a recovered benchmark, an actual verified talent cost, or an explicit deal override. If either side is absent, the model remains MISSING_INPUT and does not infer the missing value.
 
