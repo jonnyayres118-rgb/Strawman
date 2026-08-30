@@ -13,7 +13,7 @@ Recovered contextual assumptions are recorded as RECOVERED_CONTEXT, not automati
 ## Commercial engine rule
 Every BUY and SELL value carries provenance independently. Input precedence is explicit per side: a deal BUY override wins only for BUY; otherwise actual talent BUY can replace benchmark BUY; otherwise benchmark BUY is used. A deal SELL override wins only for SELL; otherwise benchmark SELL is used. This means changing client pricing never silently rewrites delivery cost.
 
-If either side remains absent or invalid, the member is unresolved and the scenario stays incomplete. Explicit zero values are preserved where deliberately approved rather than treated as absent. Benchmark lookups are copied into deal state so editing a Strawman cannot mutate the underlying rate library.
+If either side remains absent or invalid, or the role allocation has invalid weeks/days-per-week, the member is unresolved and the scenario stays incomplete. Explicit zero commercial values are preserved where deliberately approved rather than treated as absent. Benchmark lookups are copied into deal state so editing a Strawman cannot mutate the underlying rate library.
 
 A scenario can contain unresolved roles while being designed. The internal workspace shows verified subtotal economics, the unique unresolved role types and an attention count for the UI. A final scenario investment is unavailable until at least one role exists and every included role is fully costed. Once complete, the internal view exposes final revenue, cost, GP and GM. Client proposal generation receives only the final investment and client-safe team/deployment fields such as role, layer, phase, total days, weeks and days per week. Individual BUY/SELL rates never cross that boundary.
 
