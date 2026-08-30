@@ -23,3 +23,11 @@ test('fully verified one-person land scenario produces complete economics', () =
   assert.equal(result.gp, 5600);
   assert.equal(Math.round(result.gm * 1000)/10, 33.3);
 });
+
+test('duplicate unresolved roles are reported once for commercial attention', () => {
+  const result = calculateCommercialScenario({ members:[
+    { id:'eng1', roleId:'ai-engineer', weeks:4, daysPerWeek:2, commercial:null },
+    { id:'eng2', roleId:'ai-engineer', weeks:8, daysPerWeek:3, commercial:null }
+  ]});
+  assert.deepEqual(result.missingInputs, ['ai-engineer']);
+});
