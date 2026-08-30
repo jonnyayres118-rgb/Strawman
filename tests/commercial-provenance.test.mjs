@@ -25,3 +25,11 @@ test('deal BUY override takes precedence over talent and benchmark BUY while SEL
   assert.equal(rate.buySource, 'deal:approved-buy');
   assert.equal(rate.sellSource, 'benchmark:v1');
 });
+
+test('SELL override does not overwrite benchmark BUY', () => {
+  const rate = resolveCommercialRate({ roleId:'ai-product-lead', benchmark:{ buyRate:700, sellRate:1000, source:'benchmark:v1' }, override:{ sellRate:1150, source:'deal:approved-sell' } });
+  assert.equal(rate.buyRate, 700);
+  assert.equal(rate.sellRate, 1150);
+  assert.equal(rate.buySource, 'benchmark:v1');
+  assert.equal(rate.sellSource, 'deal:approved-sell');
+});
