@@ -15,7 +15,7 @@ Every BUY and SELL value carries provenance independently. Input precedence is e
 
 Explicit zero values are preserved where deliberately approved rather than treated as absent. Benchmark lookups are copied into deal state so editing a Strawman cannot mutate the underlying rate library.
 
-A scenario can contain unresolved roles while being designed. The internal workspace shows verified subtotal economics and the exact missing roles, but a final scenario investment is unavailable until every included role is fully costed. Once complete, the internal view exposes final revenue, cost, GP and GM. Client proposal generation receives only the final investment and client-safe team/deployment fields.
+A scenario can contain unresolved roles while being designed. The internal workspace shows verified subtotal economics, the exact missing roles and an unresolved-role count for the UI. A final scenario investment is unavailable until every included role is fully costed. Once complete, the internal view exposes final revenue, cost, GP and GM. Client proposal generation receives only the final investment and client-safe team/deployment fields.
 
 ## Must not be guessed
 - Role-specific salary/BUY rates.
