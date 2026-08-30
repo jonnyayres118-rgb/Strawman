@@ -32,3 +32,8 @@ test('zero BUY remains a valid explicit value rather than being treated as missi
   assert.equal(rate.buyRate, 0);
   assert.equal(rate.sellRate, 1200);
 });
+
+test('negative commercial rates are invalid', () => {
+  assert.equal(resolveCommercialRate({ roleId:'bad', override:{ buyRate:-1, sellRate:1000, source:'bad' } }).status, 'INVALID_INPUT');
+  assert.equal(resolveCommercialRate({ roleId:'bad', override:{ buyRate:500, sellRate:-1, source:'bad' } }).status, 'INVALID_INPUT');
+});
