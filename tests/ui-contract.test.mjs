@@ -15,6 +15,14 @@ test('builder is a continuous jump-to-section canvas',()=>{
   assert.ok(page.includes('Collapse section'));
 });
 
+test('Outside-In import is the front door to the builder',()=>{
+  for(const label of ['Import Outside-In','Upload PDF, DOCX or TXT','Paste Outside-In','Parse Outside-In','Import Review','Apply to Builder']) assert.ok(page.includes(label),label);
+});
+
+test('Outside-In import preserves evidence confidence and selective refresh',()=>{
+  for(const label of ['FACT','INFERENCE','HYPOTHESIS','UNKNOWN','Imported confidently','Still unknown','Regenerate from Outside-In','Evidence','Mission','Team hypothesis']) assert.ok(page.includes(label),label);
+});
+
 test('team workflow exposes Core Flex Scale and client supplied capability',()=>{
   for(const label of ['Core','Flex','Scale','Provided by client']) assert.ok(page.includes(label),label);
 });
