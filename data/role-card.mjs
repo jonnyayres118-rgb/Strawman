@@ -1,0 +1,3 @@
+export const ROLE_CARD=[
+['Principal AI / AI Architect','Leadership'],['AI Product Lead / AI Product Manager','Leadership'],['Technical Delivery / Programme Lead','Leadership'],['Solution / Platform Architect','Architecture'],['AI Engineer','Engineering'],['Software / Full-stack Engineer','Engineering'],['Data Engineer','Data'],['Data Scientist','Data'],['AI Infrastructure Engineer','Platform'],['MLOps Engineer','Platform'],['Cloud / DevOps Engineer','Platform'],['Product Manager','Product'],['Product Designer / UX','Design'],['Security / Governance Specialist','Governance'],['Automation Engineer','Automation'],['Data / Integration Architect','Architecture']
+].map(([role,discipline])=>({role,discipline}));
