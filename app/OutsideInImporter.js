@@ -1,0 +1,28 @@
+"use client";
+import {useState} from "react";
+
+const STORE="elastic_strawman_builder_v4";
+const tidy=s=>String(s||"").replace(/\r/g,"").trim();
+const pick=(text,labels)=>{for(const label of labels){const re=new RegExp(`(?:^|\\n)#{0,4}\\s*${label}\\s*[:\\-]?\\s*([\\s\\S]*?)(?=\\n#{0,4}\\s*(?:Trigger|Observation|Evidence|Known facts|Facts|Business context|Pressure|Consequence|Operational implication|Tension|Hypothesis|Existing capability|Unknown|Discovery question|Question|Mission|Outcome|Success outcomes|Technologies|Constraints)\\s*[:\\-]?|$)`,`i`);const m=text.match(re);if(m?.[1]?.trim())return tidy(m[1])}return ""};
+const firstSentence=text=>tidy(text).split(/(?<=[.!?])\s+/)[0]||"";
+function parseOutsideIn(text){
+ const raw=tidy(text);
+ const facts=pick(raw,["Evidence","Known facts","Facts","Observation"]);
+ const trigger=pick(raw,["Trigger","Observable change","Observation"])||firstSentence(raw);
+ const exposure=pick(raw,["Likely consequence","Business context","Pressure","Operational implication","Consequence"]);
+ const tension=pick(raw,["Tension","Hypothesis"]);
+ const existingCapability=pick(raw,["Existing capability"]);
+ const unknown=pick(raw,["Unknown","Critical unknown"]);
+ const question=pick(raw,["Discovery question","Question"]);
+ const mission=pick(raw,["Mission"]);
+ const outcome=pick(raw,["Outcome","Desired outcome"]);
+ const success=pick(raw,["Success outcomes"]);
+ return {trigger,facts,exposure,tension,existingCapability,unknown,question,mission,outcome,success,raw};
+}
+export default function OutsideInImporter(){
+ const [open,setOpen]=useState(false),[text,setText]=useState(""),[parsed,setParsed]=useState(null),[busy,setBusy]=useState(false),[refresh,setRefresh]=useState({Evidence:true,Mission:true,"Team hypothesis":true});
+ const parse=()=>setParsed(parseOutsideIn(text));
+ const upload=async e=>{const file=e.target.files?.[0];if(!file)return;setBusy(true);try{const fd=new FormData();fd.append("file",file);const res=await fetch("/api/parse-outside-in",{method:"POST",body:fd});const data=await res.json();if(!res.ok)throw new Error(data.error||"Could not parse file");setText(data.text||"");setParsed(parseOutsideIn(data.text||""))}catch(err){alert(err.message)}finally{setBusy(false)}};
+ const apply=()=>{if(!parsed)return;const saved=JSON.parse(localStorage.getItem(STORE)||"{}");const opps=saved.opps||[];if(!opps.length)return alert("Open the Builder once before importing.");const i=0,o=structuredClone(opps[i]);if(refresh.Evidence)o.outsideIn={...o.outsideIn,trigger:parsed.trigger||o.outsideIn.trigger,facts:parsed.facts||o.outsideIn.facts,exposure:parsed.exposure||o.outsideIn.exposure,tension:parsed.tension||o.outsideIn.tension,existingCapability:parsed.existingCapability||o.outsideIn.existingCapability,unknown:parsed.unknown||o.outsideIn.unknown,question:parsed.question||o.outsideIn.question};if(refresh.Mission)o.mission={...o.mission,statement:parsed.mission||o.mission.statement,desiredOutcome:parsed.outcome||o.mission.desiredOutcome,successOutcomes:parsed.success?parsed.success.split(/\n|;/).map(x=>x.trim()).filter(Boolean):o.mission.successOutcomes};if(refresh["Team hypothesis"])o.roles=[];o.importReview={sourceText:parsed.raw,importedAt:new Date().toISOString(),confidence:{fact:!!(parsed.facts||parsed.trigger),inference:!!parsed.exposure,hypothesis:!!parsed.tension,unknown:!!parsed.unknown}};opps[i]=o;localStorage.setItem(STORE,JSON.stringify({...saved,opps}));location.reload()};
+ return <div className="importDock"><button className="importLaunch" onClick={()=>setOpen(!open)}>Import Outside-In</button>{open&&<div className="importModal"><div className="importTop"><div><small>OUTSIDE-IN IMPORT</small><h2>Start with the research you already have.</h2><p>Upload PDF, DOCX or TXT, or paste an Outside-In. We extract the evidence and proposed mission before touching the team.</p></div><button onClick={()=>setOpen(false)}>×</button></div><div className="importGrid"><div><label className="uploadBox">Upload PDF, DOCX or TXT<input type="file" accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={upload}/></label><label className="field"><span>Paste Outside-In</span><textarea value={text} onChange={e=>setText(e.target.value)} placeholder="Paste the full Outside-In here..."/></label><button className="btn primary" disabled={busy||!text} onClick={parse}>{busy?"Parsing file...":"Parse Outside-In"}</button></div><div className="importReview"><small>IMPORT REVIEW</small><h3>Import Review</h3>{!parsed?<p className="muted">Parse the document to review what will enter the Builder.</p>:<><div className="confidence"><b>FACT</b><p><strong>Imported confidently:</strong> {parsed.facts||parsed.trigger||"No explicit evidence section detected. Review before applying."}</p></div><div className="confidence"><b>INFERENCE</b><p>{parsed.exposure||"No likely consequence detected."}</p></div><div className="confidence"><b>HYPOTHESIS</b><p>{parsed.tension||"No explicit hypothesis detected."}</p></div><div className="confidence"><b>UNKNOWN</b><p><strong>Still unknown:</strong> {parsed.unknown||parsed.question||"No explicit unknown detected. Add one in the Builder."}</p></div><h4>Regenerate from Outside-In</h4>{Object.keys(refresh).map(k=><label className="refreshCheck" key={k}><input type="checkbox" checked={refresh[k]} onChange={e=>setRefresh(x=>({...x,[k]:e.target.checked}))}/>{k}</label>)}<button className="btn primary applyImport" onClick={apply}>Apply to Builder</button></>}</div></div></div>}</div>;
+}
